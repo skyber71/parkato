@@ -1,14 +1,7 @@
-const loadLogin =  async (req, res)=>{
-    res.send("Hello world");
-
-    
+const login =  async (req, res)=>{
+    res.send("Hello world");  
 }
 
-
-
-
-
-
 module.exports = {
-    loadLogin: loadLogin
+    login: login
 }

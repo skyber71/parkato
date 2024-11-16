@@ -2,7 +2,7 @@ const express         = require("express");
 const app             = express();
 const merchant_routes = require("./routes/merchantRoutes");
 const dotenv          = require('dotenv').config();
-const sql = require("./db/db");
+const sql             = require("./db/db");
 
 
 app.use("/",merchant_routes);

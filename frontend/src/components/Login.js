@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../assets/login.css";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import "../assets/home-page.css";
+import { Link, useNavigate } from "react-router-dom";  // Import useNavigate
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState(""); // For showing messages like success or error
+    const navigate = useNavigate();  // Initialize useNavigate hook
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -30,11 +31,11 @@ const Login = () => {
             // Show success message
             setMessage("Login successful!");
 
+            // Navigate to the home page
+            navigate("/home");  // Navigate to the '/home' route
+
             // Optionally: Print the JWT token to the console
             console.log("JWT Token:", response.data.jwtoken);
-
-            // You can navigate to another page if necessary, e.g., using react-router
-            // history.push("/dashboard"); // or use navigate() with React Router v6
         } catch (error) {
             if (error.response && error.response.data) {
                 setMessage(error.response.data.message); // Show error message from backend
@@ -45,37 +46,46 @@ const Login = () => {
     };
 
     return (
-        <div className="form-container">
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Login</button>
-            </form>
+        <div className="login-page">
+            {/* Left half with an image */}
+            <div className="image-container">
+                <img src="/assets/login-img.jpeg" alt="Login" />
+            </div>
 
-            {/* Message for login status */}
-            {message && <p>{message}</p>}
+            {/* Right half with the login form */}
+            <div className="form-container">
+                <h1>Welcome to ParkAtO!</h1>
+                <h2>Please Login</h2>
+                <form onSubmit={handleLogin}>
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
 
-            {/* Link to redirect to the register page */}
-            <p>
-                Don't have an account? <Link to="/register">Register here</Link>
-            </p>
+                {/* Message for login status */}
+                {message && <p className="message">{message}</p>}
+
+                {/* Link to register */}
+                <p>
+                    Don't have an account? <Link to="/register">Register here</Link>
+                </p>
+            </div>
         </div>
     );
 };

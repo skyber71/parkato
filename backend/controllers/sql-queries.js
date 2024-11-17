@@ -23,9 +23,9 @@ const insertMyUser = async ( name, email, password ) => {
 
 const getUserPassword = async (email) => {
     const user = await sql`
-        SELECT password FROM users
+        SELECT * FROM users
         WHERE email = ${email}`;
-    return user[0].password;
+    return user[0];
 }
 
 
@@ -40,9 +40,30 @@ const addBooking = async(parkingSpaceId, timeIn, timeOut, userId, userVehicleId)
 }
 
 
+const insertVehicle = async(userId, vehicleName) => {
+    const vehicle = await sql`
+        INSERT INTO vehicles
+            (name, user_id)
+        VALUES
+            (${ vehicleName }, ${ userId })
+        RETURNING id`;
+    return vehicle;
+}
+
+
+const checkVehicleForUser =  async (userVehicleId, userId) => {
+    const vehicle = await sql`
+        SELECT * FROM vehicles
+        WHERE id = ${ userVehicleId } AND user_id = ${ userId }`;
+    return vehicle[0];
+}
+
+
 module.exports = {
     insertMerchant,
     insertMyUser,
     getUserPassword,
-    addBooking
+    addBooking,
+    insertVehicle,
+    checkVehicleForUser
 }

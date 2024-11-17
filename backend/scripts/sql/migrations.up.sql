@@ -28,6 +28,8 @@ CREATE TABLE parking_spaces (
 
 CREATE TABLE vehicles (
     id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    UNIQUE (user_id, name),
     user_id INT,  -- Foreign key to your users table
     FOREIGN KEY (user_id) REFERENCES users(id)
 );

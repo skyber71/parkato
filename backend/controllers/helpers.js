@@ -46,14 +46,22 @@ const registerUser = async (name, email, password, insertFunction, res, path) =>
 
 
 const loginUser = async (email, password, getPassword, res, path) => {
-    const hashedPassword = await getPassword(email);
+    const user = await getPassword(email);
+    if (!user) {
+        return res.status(401).json({ message: "Invalid email or password." });
+    }
+    console.log(user);
+    const hashedPassword = user.password
     if (!hashedPassword) {
         return res.status(401).json({ message: "Invalid email or password." });
     }
     const isMatch = await bcrypt.compare(password, hashedPassword);
     if (isMatch) {
         console.log("Password matches!");
-        const jwtoken = jwt.sign({email: email}, jwtSecret,{expiresIn: "24h"});
+
+
+
+        const jwtoken = jwt.sign({email: user.id, id: user.id}, jwtSecret,{expiresIn: "24h"});
         res.status(200).json({message: "Login successful",jwtoken});
     } else {
         console.log("Password does not match.");

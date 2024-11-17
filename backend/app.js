@@ -3,7 +3,9 @@ const app             = express();
 const merchant_routes = require("./routes/merchantRoutes");
 const dotenv          = require('dotenv').config();
 const sql             = require("./db/db");
-
+const cors            = require('cors');
+app.use(cors());
+app.use(express.json());
 
 app.use("/",merchant_routes);
 
@@ -19,7 +21,7 @@ const testConnection = async () => {
 testConnection();
 
 
-app.listen(3000,(err)=>{
+app.listen(8000,(err)=>{
     if(err){
         console.log("Error starting server:", err);
         return;

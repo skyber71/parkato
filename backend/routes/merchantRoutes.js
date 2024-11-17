@@ -15,7 +15,7 @@ merchant_routes.post('/user/booking', authenticate, merchantController.reservePa
 merchant_routes.post('/user/vehicle/add', authenticate, merchantController.addVehicle);
 
 
-merchant_routes.get("/login", merchantController.loginMyUser)
+merchant_routes.post("/login", merchantController.loginMyUser)
 
 
 module.exports = merchant_routes;

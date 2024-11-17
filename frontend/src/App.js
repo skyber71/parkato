@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"; // Include Link for navigation
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom"; // Include Link for navigation
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Home from "./components/Home";

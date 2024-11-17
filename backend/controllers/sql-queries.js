@@ -3,37 +3,46 @@ const sql = require("../db/db");
 
 const insertMerchant = async ( name, email, password ) => {
     const users = await sql`
-        insert into merchants
+        INSERT INTO merchants
             (name, email, password)
-        values
+        VALUES
             (${ name }, ${ email }, ${ password})
-        returning email
-    `;
-    return users
+        RETURNING email`;
+    return users;
 }
 
 const insertMyUser = async ( name, email, password ) => {
     const users = await sql`
-        insert into users
+        INSERT INTO users
             (name, email, password)
-        values
+        VALUES
             (${ name }, ${ email }, ${ password})
-        returning email
-    `;
-    return users
+        RETURNING email`;
+    return users;
 }
 
 const getUserPassword = async (email) => {
     const user = await sql`
-        select password from users
-        where email = ${email}
-    `;
+        SELECT password FROM users
+        WHERE email = ${email}`;
     return user[0].password;
+}
+
+
+const addBooking = async(parkingSpaceId, timeIn, timeOut, userId, userVehicleId) => {
+    const booking = await sql`
+        INSERT INTO bookings
+            (parking_space_id, start_time, end_time, user_id, user_vehicle_id)
+        VALUES
+            (${ parkingSpaceId }, ${ timeIn }, ${ timeOut }, ${ userId }, ${ userVehicleId })
+        RETURNING id`;
+    return booking;
 }
 
 
 module.exports = {
     insertMerchant,
     insertMyUser,
-    getUserPassword
-};
+    getUserPassword,
+    addBooking
+}

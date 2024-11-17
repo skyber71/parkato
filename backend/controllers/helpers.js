@@ -50,7 +50,6 @@ const loginUser = async (email, password, getPassword, res, path) => {
     if (!hashedPassword) {
         return res.status(401).json({ message: "Invalid email or password." });
     }
-    console.log(hashedPassword, password);
     const isMatch = await bcrypt.compare(password, hashedPassword);
     if (isMatch) {
         console.log("Password matches!");

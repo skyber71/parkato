@@ -10,6 +10,7 @@ merchant_routes.use(bodyParser.urlencoded({extended: true}));
 
 merchant_routes.post('/merchant/register', merchantController.registerMerchant);
 merchant_routes.post('/register', merchantController.registerMyUser);
+merchant_routes.post('/user/booking', merchantController.reserveParking);
 
 
 merchant_routes.get("/login", merchantController.loginMyUser)

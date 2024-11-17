@@ -1,2 +1,9 @@
+DROP TABLE IF EXISTS bookings;
+
+DROP TABLE IF EXISTS vehicles   ;
+
+DROP TABLE IF EXISTS parking_spaces;
+
 DROP TABLE IF EXISTS users;
+
 DROP TABLE IF EXISTS merchants;

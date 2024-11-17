@@ -1,76 +1,81 @@
-// src/Register.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import CryptoJS from 'crypto-js';
-import "../assets/Register.css"
+import React, { useState } from "react";
+import axios from "axios";
+import "../assets/register.css"
+import { Link } from "react-router-dom";
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState(""); // To show messages like success or error
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!email || !password || !name) {
-      setMessage('All fields are required.');
-      return;
-    }
+    const handleRegister = async (e) => {
+        e.preventDefault();
 
-    // Encrypt the password
-    const encryptedPassword = CryptoJS.AES.encrypt(password, 'kiran-yadav').toString();
+        // Basic validation for empty fields
+        if (!name || !email || !password) {
+            setMessage("All fields are required.");
+            return;
+        }
 
-    try {
-      const response = await axios.post('/registeruser', { email, password: encryptedPassword, name });
-      console.log(response)
-      setMessage(`${response.data.message}`);
-      setEmail('');
-      setPassword('');
-      setName('');
-    } catch (error) {
-      setMessage(`Error: ${error.response ? error.response.data.message : error.message}`);
-    }
-  };
+        try {
+            const response = await axios.post("http://localhost:8000/register", {
+                name,
+                email,
+                password,
+            });
 
-  return (
-    <div className="form-container">
-      <h2>Register User</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input 
-            className='input-field'
-            type="text" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-            required 
-          />
+            // Handle successful registration
+            setMessage(response.data.message); // Show success message from server
+        } catch (error) {
+            // Handle error (e.g., email already exists or other server issues)
+            if (error.response && error.response.data) {
+                setMessage(error.response.data.message); // Show error message from server
+            } else {
+                setMessage("Something went wrong. Please try again later.");
+            }
+        }
+    };
+
+    return (
+        <div className="form-container">
+            <h2>Register</h2>
+            <form onSubmit={handleRegister}>
+                <div className="form-group">
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Register</button>
+            </form>
+            {message && <div id="response-message"><p>{message}</p></div>}  {/* Show the response message */}
+            <p>
+                Already have an account? <Link to="/login">Login here</Link>
+            </p>
         </div>
-        <div>
-          <label>Email:</label>
-          <input 
-            className='input-field'
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input 
-            className='input-field'
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
-        </div>
-        <button type="submit">Register</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
-  );
+    );
 };
 
 export default Register;

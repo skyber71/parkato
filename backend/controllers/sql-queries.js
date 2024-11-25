@@ -58,6 +58,12 @@ const checkVehicleForUser =  async (userVehicleId, userId) => {
     return vehicle[0];
 }
 
+const getVehicleForUser = async(userId) => {
+    const vehicles = await sql`
+        SELECT * FROM vehicles
+        WHERE user_id = ${ userId }`;
+    return vehicles;
+}
 
 module.exports = {
     insertMerchant,
@@ -65,5 +71,6 @@ module.exports = {
     getUserPassword,
     addBooking,
     insertVehicle,
-    checkVehicleForUser
+    checkVehicleForUser,
+    getVehicleForUser
 }

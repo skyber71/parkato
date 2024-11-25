@@ -6,7 +6,8 @@ const {
     getUserPassword,
     addBooking,
     insertVehicle,
-    checkVehicleForUser
+    checkVehicleForUser,
+    getVehicleForUser
 }                    = require("./sql-queries");
 const {
     registerUser,
@@ -78,10 +79,26 @@ const addVehicle = async (req, res) => {
     }
 }
 
+
+const listVehicles = async (req, res) => {
+    try {
+        const userId = req.user.id; // Assuming user info is attached to the request object by the middleware
+        if (!userId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const vehicleData = await getVehicleForUser(userId);
+        res.status(200).json({ message: "Vehicles fetched successfully", vehicles: vehicleData });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+}
+
 module.exports = {
     registerMerchant,
     registerMyUser,
     loginMyUser,
     reserveParking,
-    addVehicle
+    addVehicle,
+    listVehicles
 }

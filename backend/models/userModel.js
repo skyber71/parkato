@@ -1,15 +1,6 @@
 const sql = require("../db/db");
 
 
-const insertMerchant = async ( name, email, password ) => {
-    const users = await sql`
-        INSERT INTO merchants
-            (name, email, password)
-        VALUES
-            (${ name }, ${ email }, ${ password})
-        RETURNING email`;
-    return users;
-}
 
 const insertMyUser = async ( name, email, password ) => {
     const users = await sql`
@@ -66,7 +57,6 @@ const getVehicleForUser = async(userId) => {
 }
 
 module.exports = {
-    insertMerchant,
     insertMyUser,
     getUserPassword,
     addBooking,

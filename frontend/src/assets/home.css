@@ -1,0 +1,78 @@
+/* VehiclesList.css */
+
+/* General container styling */
+.vehicles-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title styling */
+  .vehicles-title {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Loading and error text */
+  .loading-text,
+  .error-text,
+  .no-data-text {
+    text-align: center;
+    font-size: 16px;
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .error-text {
+    color: #d9534f; /* Red for error */
+  }
+  
+  .no-data-text {
+    color: #999;
+  }
+  
+  /* Vehicle list styling */
+  .vehicles-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Card styling */
+  .vehicle-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  /* Hover effect for cards */
+  .vehicle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Vehicle name styling */
+  .vehicle-name {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+  }
+  
+  /* Vehicle ID styling */
+  .vehicle-id {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+  }
+  
+  

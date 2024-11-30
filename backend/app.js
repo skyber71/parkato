@@ -1,27 +1,21 @@
 const express         = require("express");
 const app             = express();
-const merchant_routes = require("./routes/merchantRoutes");
-const dotenv          = require('dotenv').config();
-const sql             = require("./db/db");
 const cors            = require('cors');
+const merchant_routes = require("./routes/merchantRoutes");
+const user_routes     = require("./routes/userRoutes");
+const testConnection  = require("./utils/dbTest")
+
 app.use(cors());
 app.use(express.json());
 
-app.use("/",merchant_routes);
+app.use("/merchant", merchant_routes);
+app.use("/", user_routes);
 
 
-const testConnection = async () => {
-    try {
-        await sql`SELECT 1`;
-        console.log("Connected to the database successfully!");
-    } catch (error) {
-        console.error("Failed to connect to the database:", error);
-    }
-}
+
 testConnection();
 
-
-app.listen(8000,(err)=>{
+app.listen(8000, (err)=>{
     if(err){
         console.log("Error starting server:", err);
         return;

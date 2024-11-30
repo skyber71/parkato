@@ -20,10 +20,18 @@ const Login = () => {
 
         try {
             // Send POST request with email and password
-            const response = await axios.post("http://localhost:8000/login", {
-                email,
-                password,
-            });
+            const response = await axios.post(
+                "http://localhost:8000/api/login",
+                {
+                    email,
+                    password,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json', // Explicitly set the content type
+                    },
+                }
+            );
 
             // Store the JWT token in localStorage
             localStorage.setItem("jwtToken", response.data.jwtoken);

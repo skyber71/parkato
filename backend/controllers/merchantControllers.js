@@ -1,4 +1,5 @@
 const sqlOps  = require("../models/merchantModel");
+const helpers = require("./helpers");
 
 const registerMerchant = async (req, res) => {
     const { name, email, password } = req.body;
